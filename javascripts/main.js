@@ -1,15 +1,6 @@
 // Filter fish that are "on sale"
 // Add fish to "Basket"
 
-$.get("../db/fishes.json")
-  .done(data => {
-    console.log(data);
-    writeFishes(data.fishes);
-  })
-  .fail(error => {
-    console.error(error);
-  });
-
 const writeFishes = arrayOfFishes => {
   let domString = "";
   arrayOfFishes.forEach(fish => {
@@ -33,4 +24,26 @@ const writeFishes = arrayOfFishes => {
             </div>`;
   });
   $("#available").append(domString);
+  bindEvents();
 };
+
+const bindEvents = () => {
+  $(".add").on("click", e => {
+    const fishToMove = $(e.target).closest(".fish");
+    $("#snagged").append(fishToMove);
+    // button text => Remove form Basket | change class - 'add' + 'remove'
+    $(e.target)
+      .text("Remove from Basket")
+      .addClass("remove")
+      .removeClass("add");
+  });
+};
+
+$.get("../db/fishes.json")
+  .done(data => {
+    console.log(data);
+    writeFishes(data.fishes);
+  })
+  .fail(error => {
+    console.error(error);
+  });
