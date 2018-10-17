@@ -1,6 +1,13 @@
-// Filter fish that are "on sale"
+const discount = 0.12;
 
-// Add fish to "Basket"
+const applySale = () => {
+  $(".on-sale").each((i, fish) => {
+    const fullPrice = $(fish).find(".price");
+    const newPrice = parseInt(fullPrice.html()) * (1 - discount).toFixed(2);
+    fullPrice.html(newPrice);
+  });
+};
+
 const writeFishes = arrayOfFishes => {
   let domString = "";
   arrayOfFishes.forEach(fish => {
@@ -29,18 +36,6 @@ const writeFishes = arrayOfFishes => {
   // bindEvents();
 };
 
-// const bindEvents = () => {
-//   $(".add").on('click', (e) => {
-
-//   });
-
-//   // Remove Fish
-//   $(".remove").on('click', (e) => {
-
-//   })
-// };
-
-// Dynamically listen for events that happen on buttons with a class of add
 $("body").on("click", "button.add", e => {
   // what is the div that has the fish
   const fishToMove = $(e.target).closest(".fish");
@@ -67,7 +62,7 @@ $("#show-sale").click(() => {
     .not("on-sale")
     .toggle();
   $("#show-sale").text((i, text) => {
-    return text === "show sale fish" ? "show all" : "show sale fish";
+    return text === "Show Sale Fish" ? "Show All" : "Show Sale Fish";
   });
 });
 
@@ -76,6 +71,7 @@ $.get("../db/fishes.json")
   .done(data => {
     console.log(data);
     writeFishes(data.fishes);
+    applySale();
   })
   .fail(error => {
     console.error(error);
