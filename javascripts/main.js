@@ -28,16 +28,27 @@ const writeFishes = arrayOfFishes => {
 };
 
 const bindEvents = () => {
-  $(".add").on("click", e => {
-    const fishToMove = $(e.target).closest(".fish");
-    $("#snagged").append(fishToMove);
-    // button text => Remove form Basket | change class - 'add' + 'remove'
-    $(e.target)
-      .text("Remove from Basket")
-      .addClass("remove")
-      .removeClass("add");
-  });
+  $(".add").on("click", e => {});
+  $(".revove").on("click", e => {});
 };
+
+$("body").on("click", "button.add", e => {
+  const fishToMove = $(e.target).closest(".fish");
+  $("#snagged").append(fishToMove);
+  $(e.target)
+    .text("Remove from Basket")
+    .addClass("remove")
+    .removeClass("add");
+});
+
+$("body").on("click", "button.remove", e => {
+  const fishToMove = $(e.target).closest(".fish");
+  $("#available").append(fishToMove);
+  $(e.target)
+    .text("Add To Basket")
+    .addClass("add")
+    .removeClass("remove");
+});
 
 $.get("../db/fishes.json")
   .done(data => {
